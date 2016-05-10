@@ -63,3 +63,6 @@ target/
 
 #Virtualenv
 .virtualenv
+
+#sqlite
+*.sqlite3
