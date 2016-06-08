@@ -21,4 +21,7 @@ Linux
 Install requirements
 --------------------
 
-- pip install -r requirements/base.txt
+- for the service
+  - pip install -r requirements/base.txt
+- for the development
+  - pip install -r requirements/dev.txt

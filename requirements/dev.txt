@@ -1,0 +1,7 @@
+# Include the test requirements file
+-r base.txt
+
+# Development
+ipython==4.0.0
+pyreadline==2.1
+pdbpp==0.8.3
