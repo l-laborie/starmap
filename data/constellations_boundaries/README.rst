@@ -10,9 +10,9 @@ Each file have the abreviation names: and for Andromeda
 files format
 ------------
 
-# right ascension: HH MM SS.SSSS with J2000 coordinates
-# declination: DD.DDDDDDDD with J2000 coordinates
-# Abreviation: XXX
+- right ascension: HH MM SS.SSSS with J2000 coordinates
+- declination: DD.DDDDDDDD with J2000 coordinates
+- Abreviation: XXX
 
 
 References
