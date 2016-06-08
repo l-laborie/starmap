@@ -28,4 +28,5 @@ CATALOG_NAMES = [
 
 def fixture_catalogs():
     for abb, name, desc in CATALOG_NAMES:
-        Catalog.objects.create(name=name, abbreviation=abb, description=desc)
+        Catalog.objects.get_or_create(name=name, abbreviation=abb,
+                                      description=desc)

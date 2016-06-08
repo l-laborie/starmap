@@ -5,6 +5,7 @@ from django.db.models import (
     FloatField,
     ForeignKey,
     ManyToManyField,
+    TimeField,
 )
 
 
@@ -54,7 +55,7 @@ class Object(Model):
         ('MWSC', 'Milky Way Star Cloud'),
     )
 
-    right_ascension = FloatField(
+    right_ascension = TimeField(
         help_text='he star\'s right ascension for epoch and equinox 2000.0.')
     declination = FloatField(help_text='he star\'s declination for epoch and '
                                        'equinox 2000.0.')
@@ -155,3 +156,17 @@ class DeepSky(Object):
     angle = FloatField(
         help_text=' Position angle of the semimajor axis of the object, '
                   'in degrees. Only defined if r1 and r2 are present.')
+
+
+class ConstellationBoundary(Model):
+    class Meta(object):
+        unique_together = ('constellation', 'part', 'index')
+
+    constellation = ForeignKey('Constellation', related_name='Boundaries')
+    index = PositiveIntegerField()
+    part = PositiveIntegerField()
+    right_ascension = TimeField(
+        help_text='the position\'s right ascension for epoch and equinox '
+                  '2000.0.')
+    declination = FloatField(help_text='he star\'s declination for epoch and '
+                                       'equinox 2000.0.')

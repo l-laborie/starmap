@@ -1,5 +1,5 @@
-from starmap.celestial.models import Constellation
-
+from starmap.celestial.models import Constellation, ConstellationBoundary
+from starmap.settings import PATH_DATA
 
 CONSTELLATION_NAMES = [
     ('Aquila', 'Aql', 'Ptolemee'),  # Aigle
@@ -95,4 +95,41 @@ CONSTELLATION_NAMES = [
 
 def fixture_constellation():
     for name, abb, ori in CONSTELLATION_NAMES:
-        Constellation.objects.create(name=name, abbreviation=abb, origin=ori)
+        Constellation.objects.get_or_create(name=name, abbreviation=abb, origin=ori)
+
+
+def fixture_constellation_boundaries():
+    fixture_constellation()
+
+    def load_boundaries(path, constellation, part=1):
+        max = ConstellationBoundary.objects.filter(
+            constellation=constellation, part=part).count()
+        if max > 0:
+            return
+
+        index = 0
+        with open(path) as file:
+            for line in file:
+                right_ascension_str, declination_str, abb = line.split('|')
+                ConstellationBoundary.objects.create(
+                    constellation=constellation,
+                    index=index, part=part,
+                    right_ascension=right_ascension_str.replace(' ', ':'),
+                    declination=float(declination_str))
+                index += 1
+        return
+
+    for cons in Constellation.objects.all():
+        # Open file
+
+        if cons.abbreviation == 'Ser':
+
+                load_boundaries(
+                    '%s/constellations_boundaries/%s%d.txt' % (
+                        PATH_DATA, cons.abbreviation.lower(), part_index),
+                    cons, part_index)
+        else:
+            load_boundaries(
+                '%s/constellations_boundaries/%s.txt' % (
+                    PATH_DATA, cons.abbreviation.lower()),
+                cons)

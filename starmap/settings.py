@@ -27,6 +27,8 @@ DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
+PATH_DATA = os.environ.get('PATH_DATA', './data')
+
 
 # Application definition
 
