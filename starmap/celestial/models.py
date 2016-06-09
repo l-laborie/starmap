@@ -55,7 +55,7 @@ class Object(Model):
         ('MWSC', 'Milky Way Star Cloud'),
     )
 
-    right_ascension = TimeField(
+    right_ascension = FloatField(
         help_text='he star\'s right ascension for epoch and equinox 2000.0.')
     declination = FloatField(help_text='he star\'s declination for epoch and '
                                        'equinox 2000.0.')
@@ -65,7 +65,8 @@ class Object(Model):
     declination_radian = FloatField(help_text='he star\'s declination for '
                                               'epoch and equinox 2000.0 in '
                                               'radians')
-    constellation = ForeignKey('Constellation', related_name='+')
+    constellation = ForeignKey('Constellation', null=True, blank=True,
+                               related_name='+')
     magnitude = FloatField(help_text='The star\'s apparent visual magnitude.')
     proper = CharField(
         null=True, blank=True, max_length=50,
@@ -127,21 +128,24 @@ class Star(Object):
                   'Currently only used for Gliese stars.')
 
     # Variable Stars
-    var = CharField(
+    variable = CharField(
         null=True, blank=True, max_length=50,
         help_text='Star\'s standard variable star designation, when known')
-    var_min = FloatField(
+    magnitude_min = FloatField(
         null=True, blank=True,
         help_text=' Star\'s approximate magnitude range, for variables. '
                   'This value is based on the Hp magnitudes for the range in '
                   'the original Hipparcos catalog, adjusted to the V '
                   'magnitude scale to match the \"mag\" field')
-    var_max = FloatField(
+    magnitude_max = FloatField(
         null=True, blank=True,
         help_text=' Star\'s approximate magnitude range, for variables. '
                   'This value is based on the Hp magnitudes for the range in '
                   'the original Hipparcos catalog, adjusted to the V '
                   'magnitude scale to match the \"mag\" field')
+    x = FloatField(null=True, blank=True)
+    y = FloatField(null=True, blank=True)
+    z = FloatField(null=True, blank=True)
 
 
 class DeepSky(Object):
